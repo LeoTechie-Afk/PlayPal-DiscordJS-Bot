@@ -1,0 +1,15 @@
+{
+  "name": "moviehelper_discordbot",
+  "version": "1.0.0",
+  "description": "A bot that uses the IMDB api, and that can generate a random movie/tv show, show information about it, and can make famous quotations!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.9.0"
+  }
+}
