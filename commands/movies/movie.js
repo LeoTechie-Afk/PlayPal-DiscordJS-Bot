@@ -13,6 +13,8 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction) {
+    interaction.deferReply();
+
     const movie_name = interaction.options.getString("movie_name");
 
     let message = ``;
@@ -42,13 +44,12 @@ module.exports = {
           inline: true,
         });
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.editReply({ embeds: [embed] });
       return;
     } else {
-      await interaction.reply(
-        "I'm not quite sure I understand, can you repeat again?",
-        { ephemeral: true }
-      );
+      await interaction.editReply("I'm not quite sure that exists 🤔", {
+        ephemeral: true,
+      });
     }
   },
 };
