@@ -23,7 +23,6 @@ module.exports = {
     await sleep(2000);
 
     const randomNumber = Math.random();
-    console.log(randomNumber);
 
     if (randomNumber < 0.5) {
       file = new AttachmentBuilder("assets\\head.png");
