@@ -13,7 +13,8 @@ module.exports = {
         .setRequired(true)
     ),
   async execute(interaction) {
-    interaction.deferReply();
+    // shows "bot is thinking" so it doesn't timeout
+    await interaction.deferReply();
 
     const movie_name = interaction.options.getString("movie_name");
 
@@ -26,15 +27,19 @@ module.exports = {
     const myJson = await response.json();
 
     if (myJson.results.length != 0) {
-      for (let i = 0; i < 5; i++) {
+      // only displays the first 5 results or less
+      for (let i = 0; i < 5 && i < myJson.results.length; i++) {
         const r = myJson.results[i];
+
+        // creates message for title at i with embed link to it
         message += `${parseInt(i) + 1} - [${
           r.title
         }](https://www.imdb.com/title/${r.id})\n`;
       }
 
+      // message to display
       const embed = new EmbedBuilder()
-        .setTitle("BEEP-BOOP here's your result!")
+        .setTitle("🎞️ BEEP-BOOP here's your result!")
         .setDescription(message)
         .setColor(0x6666ff)
         .setThumbnail(myJson.results[0].image)
@@ -44,9 +49,11 @@ module.exports = {
           inline: true,
         });
 
+      // edits the reply with the embed created before
       await interaction.editReply({ embeds: [embed] });
       return;
     } else {
+      // in case there was no result to the search displays this message
       await interaction.editReply("I'm not quite sure that exists 🤔", {
         ephemeral: true,
       });
