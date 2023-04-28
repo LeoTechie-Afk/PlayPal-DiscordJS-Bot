@@ -29,6 +29,7 @@ module.exports = {
     if (myJson.results.length != 0) {
       // only displays the first 5 results or less
       for (let i = 0; i < 5 && i < myJson.results.length; i++) {
+        // result json object at i
         const r = myJson.results[i];
 
         // creates message for title at i with embed link to it

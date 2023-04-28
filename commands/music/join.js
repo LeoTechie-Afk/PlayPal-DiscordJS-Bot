@@ -8,7 +8,7 @@ module.exports = {
   async execute(interaction) {
     const voiceChannel = interaction.member.voice.channel;
 
-    if (!voiceChannel.id) {
+    if (!voiceChannel) {
       await interaction.reply("User not in voice channel! ");
       return;
     }
@@ -27,9 +27,9 @@ module.exports = {
         inline: true,
       });
 
-    voiceConnection.on(VoiceConnectionStatus.Ready, (oldState, newState) => {
-      console.log("Connection is in the Ready state!");
-    });
+    // voiceConnection.on(VoiceConnectionStatus.Ready, (oldState, newState) => {
+    //   console.log("Connection is in the Ready state!");
+    // });
 
     await interaction.reply({ embeds: [embed] });
   },
