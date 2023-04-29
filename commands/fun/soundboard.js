@@ -7,8 +7,6 @@ const {
   joinVoiceChannel,
 } = require("@discordjs/voice");
 
-// TODO: Fix output message (description:30), and double-check sound playing functionality
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("soundboard")
@@ -27,12 +25,10 @@ module.exports = {
       .readdirSync(soundFolder)
       .filter((file) => file.endsWith(".mp3"));
 
-    let description = "Here's a list of all the sounds available\n";
-    for (const i of soundFiles) {
-      description += `${i + 1} - ${soundFiles[i]}\n`;
-    }
+    const description =
+      "**Here's a list of all the sounds available:**\n" +
+      soundFiles.join("\n");
 
-    console.log(description);
     const embed = new EmbedBuilder();
     const soundName = interaction.options.getString("sound_name");
 
@@ -48,12 +44,12 @@ module.exports = {
     const guildId = interaction.guild.id;
     let connection = getVoiceConnection(guildId);
 
-    // If not connected connects though the same code that's in the join command
+    // If not connected connects through the same code that's in the join command
     if (!connection || !connection.channelId) {
       const voiceChannel = interaction.member.voice.channel;
 
       if (!voiceChannel.id) {
-        await interaction.reply("User not in voice channel! ");
+        await interaction.editReply("User not in voice channel! ");
         return;
       }
       connection = joinVoiceChannel({
@@ -67,8 +63,10 @@ module.exports = {
 
     // Plays the resource using ffmpeg's inlineVolume
     const resource = createAudioResource(
-      join(__dirname, soundFolder, `${soundName}.mp3`),
-      { inlineVolume: true }
+      join(soundFolder, `${soundName}.mp3`),
+      {
+        inlineVolume: true,
+      }
     );
 
     // Tracks any error that the player could face to the console
@@ -85,6 +83,6 @@ module.exports = {
 
     connection.subscribe(player);
 
-    await interaction.reply("Played audio from soundboard audioname");
+    await interaction.editReply("Played audio from soundboard: " + soundName);
   },
 };
