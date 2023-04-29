@@ -29,7 +29,7 @@ module.exports = {
 
     let description = "Here's a list of all the sounds available\n";
     for (const i of soundFiles) {
-      await description += `${i + 1} - ${soundFiles[i]}\n`;
+      description += `${i + 1} - ${soundFiles[i]}\n`;
     }
 
     console.log(description);
