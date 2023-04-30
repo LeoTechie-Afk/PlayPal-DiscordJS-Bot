@@ -7,6 +7,8 @@ const {
   joinVoiceChannel,
 } = require("@discordjs/voice");
 
+// TO_DO migrate to discord-player
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("soundboard")

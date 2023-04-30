@@ -1,5 +1,6 @@
 # files
 config.json
 sounds/*
+*.bat
 # folders
 node_modules/

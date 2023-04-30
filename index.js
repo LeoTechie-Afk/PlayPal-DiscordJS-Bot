@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
-const { createAudioPlayer, NoSubscriberBehavior } = require("@discordjs/voice");
+const { Player } = require("discord-player");
 const { token } = require("./config.json");
 
 const client = new Client({
@@ -10,11 +10,7 @@ const client = new Client({
 
 client.commands = new Collection();
 
-client.player = createAudioPlayer({
-  behaviors: {
-    noSubscriber: NoSubscriberBehavior.Pause,
-  },
-});
+const player = Player.singleton(client);
 
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
@@ -52,5 +48,7 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
+
+player.eventNames();
 
 client.login(token);
