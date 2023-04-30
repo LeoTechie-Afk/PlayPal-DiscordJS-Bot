@@ -4,19 +4,19 @@ A bot that uses the IMDB and OMDb api, and that can generate a random movie/tv s
 
 ![Discord](https://user-images.githubusercontent.com/40718733/235378691-02990bbf-b0d9-44e7-9284-eb7ecdbdfb20.png)
 
-## Features
+## Roadmap
 
 ✅ What the bot can currently do:
-[x] search for a movie using IMDB's api;
-[x] show a movie's information using the OMDb api;
-[x] play music using the discord-player module (feature not entirely implemented yet);
+- [x] search for a movie using IMDB's api;
+- [x] show a movie's information using the OMDb api;
+- [x] play music using the discord-player module (feature not entirely implemented yet);
 
 ❌ What else it wants to do:
-[ ] generate a random movie;
-[ ] make famous movie quotations;
-[ ] play some audio files stored in the sounds folder;
-[ ] some moderations commands;
-[ ] do some gaming related activities; 
+- [ ] generate a random movie;
+- [ ] make famous movie quotations;
+- [ ] play some audio files stored in the sounds folder;
+- [ ] some moderations commands;
+- [ ] do some gaming related activities; 
 
 ### Built With
 
