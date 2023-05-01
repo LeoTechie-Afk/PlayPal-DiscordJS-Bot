@@ -1,24 +1,20 @@
 const { useMasterPlayer } = require("discord-player");
 const { EmbedBuilder } = require("discord.js");
-const { ActivityType } = require("discord.js");
 
 const player = useMasterPlayer();
 
-module.exports = player.events.on("playerStart", (queue, track) => {
+module.exports = player.events.on("audioTrackAdd", (queue, track) => {
+  // Emitted when the player adds a single song to its queue
   try {
-    // Sets the bot state to the current song
-    player.client.user.setActivity(`to ${track.title}`, {
-      type: ActivityType.Listening,
-    });
-
-    // Emitted when a songs starts playing
     queue.metadata.channel.send({
       embeds: [
         new EmbedBuilder()
           .setColor(0x6666ff)
           .setThumbnail(track.raw.thumbnail.url)
-          .setTitle("🎶 Now playing")
-          .setDescription(`[Started playing ${track.title}](${track.url})`)
+          .setTitle("✅ Added to queue")
+          .setDescription(
+            `[Song ${track.title} added to the queue](${track.url})`
+          )
           .addFields([
             { name: "Requested by", value: `<@${track.requestedBy.id}>` },
             { name: "Duration", value: `${track.duration}` },

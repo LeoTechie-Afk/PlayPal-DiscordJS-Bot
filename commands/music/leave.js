@@ -15,14 +15,9 @@ module.exports = {
     const clientVoiceId = connection.joinConfig.channelId;
 
     // if the bot is not connected returns an error message
-    if (!connection) {
-      await interaction.reply("Bot not in a voice channel! ");
-      return;
-      // if the bot is not in the same channel as the user returns error
-    } else if (clientVoiceId != memberVoiceId) {
-      await interaction.reply("User and bot are not in the same channel.");
-      return;
-    }
+    if (!connection) return interaction.reply("Bot not in a voice channel! ");
+    if (clientVoiceId != memberVoiceId)
+      return interaction.reply("User and bot are not in the same channel.");
 
     connection.destroy();
 

@@ -1,8 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { useMasterPlayer, QueryType } = require("discord-player");
 
-// TO_DO Add event listener for when a song gets added with an embed
-
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("play")
@@ -10,14 +8,18 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("query")
-        .setDescription("The url or the name of the song you want to play.")
+        .setDescription("The name of the song you want to play.")
         .setRequired(true)
     ),
   async execute(interaction) {
     const player = useMasterPlayer(); // Get the player instance that we created earlier
     const channel = interaction.member.voice.channel;
+
     if (!channel)
-      return interaction.reply("You are not connected to a voice channel!"); // make sure we have a voice channel
+      return interaction.reply("🚫 You are not connected to a voice channel!"); // make sure we have a voice channel
+    if (interaction.member.voice.selfDeaf)
+      return interaction.reply("🎧 You need to be unmuted to play a song.");
+
     const query = interaction.options.getString("query", true); // we need input/query to play
 
     // let's defer the interaction as things can take time to process

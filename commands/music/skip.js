@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { useMasterPlayer } = require("discord-player");
+const { getVoiceConnection } = require("@discordjs/voice");
 
 // TO_DO respond with an embed
 
@@ -9,13 +10,20 @@ module.exports = {
     .setDescription("Skips a song from the queue."),
   async execute(interaction) {
     await interaction.deferReply();
-
     const channel = interaction.member.voice.channel;
+
+    // get connection
+    const guildId = interaction.guild.id;
+    const connection = getVoiceConnection(guildId);
 
     if (!channel)
       return interaction.editReply(
         "🚫 You are not connected to a voice channel !"
       ); // make sure we have a voice channel
+    if (channel != connection.joinConfig.channelId)
+      return interaction.editReply(
+        "🚫 You are not in the same channel as the bot!"
+      );
 
     const player = useMasterPlayer(); // Get the player instance that we created earlier
     const queue = player.nodes.get(interaction.guild);
