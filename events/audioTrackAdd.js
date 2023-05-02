@@ -12,9 +12,7 @@ module.exports = player.events.on("audioTrackAdd", (queue, track) => {
           .setColor(0x6666ff)
           .setThumbnail(track.raw.thumbnail.url)
           .setTitle("✅ Added to queue")
-          .setDescription(
-            `[Song ${track.title} added to the queue](${track.url})`
-          )
+          .setDescription(`[${track.title} added to the queue](${track.url})`)
           .addFields([
             { name: "Requested by", value: `<@${track.requestedBy.id}>` },
             { name: "Duration", value: `${track.duration}` },

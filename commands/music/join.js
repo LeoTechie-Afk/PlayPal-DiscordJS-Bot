@@ -1,4 +1,4 @@
-const { joinVoiceChannel, VoiceConnectionStatus } = require("@discordjs/voice");
+const { joinVoiceChannel } = require("@discordjs/voice");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
@@ -26,10 +26,6 @@ module.exports = {
         value: `<@${interaction.user.id}>`,
         inline: true,
       });
-
-    // voiceConnection.on(VoiceConnectionStatus.Ready, (oldState, newState) => {
-    //   console.log("Connection is in the Ready state!");
-    // });
 
     await interaction.reply({ embeds: [embed] });
   },

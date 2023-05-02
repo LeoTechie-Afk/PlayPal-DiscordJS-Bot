@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { useMasterPlayer, QueryType } = require("discord-player");
+const { YoutubeExtractor } = require("@discord-player/extractor");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -13,6 +14,7 @@ module.exports = {
     ),
   async execute(interaction) {
     const player = useMasterPlayer(); // Get the player instance that we created earlier
+    await player.extractors.register(YoutubeExtractor, {});
     const channel = interaction.member.voice.channel;
 
     if (!channel)
@@ -20,7 +22,7 @@ module.exports = {
     if (interaction.member.voice.selfDeaf)
       return interaction.reply("🎧 You need to be unmuted to play a song.");
 
-    const query = interaction.options.getString("query", true); // we need input/query to play
+    const query = interaction.options.getString("query"); // we need input/query to play
 
     // let's defer the interaction as things can take time to process
     await interaction.deferReply();
@@ -41,7 +43,9 @@ module.exports = {
             selfDeaf: true,
             volume: 80,
             leaveOnEnd: false,
+            leaveOnEndCooldown: 300000,
             leaveOnEmpty: true,
+            leaveOnEmptyCooldown: 300000,
           },
         });
 

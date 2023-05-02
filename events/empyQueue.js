@@ -5,10 +5,10 @@ const { ActivityType } = require("discord.js");
 module.exports = player.events.on("emptyQueue", (queue) => {
   try {
     // Emitted when the player queue has finished
-    player.client.user.setActivity(`to nothing`, {
+    player.client.user.setActivity(`nothing`, {
       type: ActivityType.Listening,
     });
-    queue.metadata.channel.send("Queue finished 😽!");
+    queue.metadata.channel.send("Queue finished 👍🏻!");
   } catch (error) {
     console.log(error);
   }

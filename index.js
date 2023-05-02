@@ -2,7 +2,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { Player } = require("discord-player");
-const { YoutubeExtractor } = require("@discord-player/extractor");
 const { token } = require("./config.json");
 
 const client = new Client({
@@ -11,10 +10,10 @@ const client = new Client({
 
 client.commands = new Collection();
 
-const player = Player.singleton(client);
-async () => {
-  await player.extractors.register(YoutubeExtractor, {});
-};
+const player = Player.singleton(client, {
+  autoRegisterExtractor: false,
+  ytdlOptions: { filter: "audioonly", highWaterMark: 1 << 30, dlChunkSize: 0 },
+});
 
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
@@ -52,7 +51,5 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
-
-player.eventNames();
 
 client.login(token);

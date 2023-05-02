@@ -7,7 +7,7 @@ const player = useMasterPlayer();
 module.exports = player.events.on("playerStart", (queue, track) => {
   try {
     // Sets the bot state to the current song
-    player.client.user.setActivity(`to ${track.title}`, {
+    player.client.user.setActivity(`${track.title}`, {
       type: ActivityType.Listening,
     });
 
