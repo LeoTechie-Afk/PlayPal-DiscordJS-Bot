@@ -2,7 +2,7 @@
 
 A simple Discord bot easy to setup, with some useful entertainment functionality, like movie and tv show searching, rating, and music playback functionality.
 
-![Discord](https://user-images.githubusercontent.com/40718733/235378691-02990bbf-b0d9-44e7-9284-eb7ecdbdfb20.png)
+<p align="center"><img src=https://user-images.githubusercontent.com/40718733/236059687-042b45b0-5425-441e-83c8-751a1e8e52b1.png /></p>
 
 ## Roadmap
 
@@ -10,7 +10,7 @@ A simple Discord bot easy to setup, with some useful entertainment functionality
 
 - [x] search for a movie using IMDB's api;
 - [x] show a movie's information using the OMDb api;
-- [x] play music using the discord-player module (feature not entirely implemented yet);
+- [x] play music using the discord-player module;
 
 ❌ What else it wants to do:
 
@@ -22,7 +22,11 @@ A simple Discord bot easy to setup, with some useful entertainment functionality
 
 ## Setup Guide
 
+TODO
+
 ## Commands Overview
+
+TODO
 
 ## Contacts
 
