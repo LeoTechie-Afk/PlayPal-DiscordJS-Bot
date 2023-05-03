@@ -37,6 +37,10 @@ TODO
 - [discord.js](https://discordjs.guide/#before-you-begin);
 - [discord-player.js](https://discord-player.js.org/docs);
 
+## License
+
+This software is released under the MIT license.
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
