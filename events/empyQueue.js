@@ -8,7 +8,7 @@ module.exports = player.events.on("emptyQueue", (queue) => {
     player.client.user.setActivity(`nothing`, {
       type: ActivityType.Listening,
     });
-    queue.channel.send("Queue finished 👍🏻!");
+    queue.metadata.channel.send("Queue finished 👍🏻!");
   } catch (error) {
     console.log(error);
   }

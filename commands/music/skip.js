@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { useMasterPlayer } = require("discord-player");
 const { getVoiceConnection } = require("@discordjs/voice");
-const { useQueue } = require("discord-player/dist");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -29,7 +28,7 @@ module.exports = {
       );
 
     const player = useMasterPlayer(); // Get the player instance that we created earlier
-    const queue = useQueue(guildId);
+    const queue = player.nodes.get(guildId);
 
     if (!queue || !queue.isPlaying())
       return interaction.editReply("🙀 Nothing is playing.");
@@ -38,10 +37,6 @@ module.exports = {
 
     try {
       queue.node.skip();
-
-      if (!queue.isEmpty) {
-        queue.node.play();
-      }
       await interaction.editReply(`Skipped: **${currentTrack.title}**`);
     } catch (e) {
       // let's return error if something failed

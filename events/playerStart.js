@@ -12,7 +12,7 @@ module.exports = player.events.on("playerStart", (queue, track) => {
     });
 
     // Emitted when a songs starts playing
-    queue.channel.send({
+    queue.metadata.channel.send({
       embeds: [
         new EmbedBuilder()
           .setColor(0x6666ff)

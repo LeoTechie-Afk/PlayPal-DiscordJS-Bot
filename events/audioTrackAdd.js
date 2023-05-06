@@ -3,10 +3,10 @@ const { EmbedBuilder } = require("discord.js");
 
 const player = useMasterPlayer();
 
-module.exports = player.events.on("audioTrackAdd", async (queue, track) => {
+module.exports = player.events.on("audioTrackAdd", (queue, track) => {
   // Emitted when the player adds a single song to its queue
   try {
-    await queue.metadata.channel.send({
+    queue.metadata.channel.send({
       embeds: [
         new EmbedBuilder()
           .setColor(0x6666ff)

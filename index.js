@@ -4,8 +4,6 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { Player } = require("discord-player");
 const { token } = require("./config.json");
 
-require("dotenv/config");
-
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
 });
@@ -53,36 +51,5 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
-
-const joinVoiceChannel = async (voiceChannel) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const voiceConnection = join({
-        channelId: voiceChannel.id,
-        guildId: voiceChannel.guild.id,
-        adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-      });
-
-      voiceConnection.on("stateChange", onVoiceConnectionStateChange);
-
-      return resolve(voiceConnection);
-    } catch (e) {
-      return reject(e);
-    }
-  });
-};
-
-const onVoiceConnectionStateChange = (oldState, newState) => {
-  const oldNetworking = Reflect.get(oldState, "networking");
-  const newNetworking = Reflect.get(newState, "networking");
-
-  oldNetworking?.off("stateChange", onNetworkStateChange);
-  newNetworking?.on("stateChange", onNetworkStateChange);
-};
-
-const onNetworkStateChange = (oldNetworkState, newNetworkState) => {
-  const newUdp = Reflect.get(newNetworkState, "udp");
-  clearInterval(newUdp?.keepAliveInterval);
-};
 
 client.login(token);
