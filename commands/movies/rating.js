@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { omdbApiKey } = require("../../config.json");
-const fetch = require("node-fetch");
 
 module.exports = {
   data: new SlashCommandBuilder()
