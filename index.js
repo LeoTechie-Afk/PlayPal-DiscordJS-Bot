@@ -3,6 +3,7 @@ const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { Player } = require("discord-player");
 const { token } = require("./config.json");
+require("dotenv").config();
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],

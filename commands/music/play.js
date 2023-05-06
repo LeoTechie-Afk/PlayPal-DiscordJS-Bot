@@ -43,9 +43,7 @@ module.exports = {
             selfDeaf: true,
             volume: 80,
             leaveOnEnd: false,
-            leaveOnEndCooldown: 300000,
             leaveOnEmpty: true,
-            leaveOnEmptyCooldown: 300000,
           },
         });
 
