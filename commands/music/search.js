@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { useMasterPlayer, QueryType } = require("discord-player");
-
+const ytdl = require("ytdl-core");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("search")
