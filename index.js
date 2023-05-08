@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { Player } = require("discord-player");
-const { token } = require("./config.json");
+const { token, youtubeCookie } = require("./config.json");
 require("dotenv").config();
 
 const client = new Client({
@@ -13,7 +13,13 @@ client.commands = new Collection();
 
 const player = Player.singleton(client, {
   autoRegisterExtractor: false,
-  ytdlOptions: { filter: "audioonly", highWaterMark: 1 << 30, dlChunkSize: 0 },
+  ytdlOptions: {
+    requestOptions: { headers: { cookie: youtubeCookie } },
+    filter: "audioonly",
+    highWaterMark: 1 << 30,
+    dlChunkSize: 0,
+    quality: "highestaudio",
+  },
 });
 
 const foldersPath = path.join(__dirname, "commands");
