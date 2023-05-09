@@ -8,8 +8,6 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply();
 
-    let index = 2;
-
     const channel = interaction.member.voice.channel;
     const queue = useQueue(interaction.guild.id);
     const track = queue.currentTrack; // current track
@@ -32,16 +30,16 @@ module.exports = {
     description += `1 - [${track.title}](${track.url})\n`;
 
     if (tracks.length > 0) {
-      // adding every song in the GuildQueue object
-      tracks.forEach(
-        (t) => (description += `${index} - [${t.title}](${t.url})\n`)
-      );
-      index++;
+      // adding 20 songs to the description
+      for (let i = 1; i < 20 && i < tracks.length; i++) {
+        description += `${i + 1} - [${tracks[i].title}](${tracks[i].url})\n`;
+      }
     }
+
+    if (tracks.length > 20) description += `...And ${tracks.length - 20} more`;
 
     embed.setDescription(description);
 
-    // Make this into embed
     await interaction.editReply({ embeds: [embed] });
   },
 };

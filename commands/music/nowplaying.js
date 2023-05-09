@@ -35,7 +35,7 @@ module.exports = {
 
     embed
       .setDescription(
-        `[${track.title}](${track.url})\nDuration: ${track.duration}\nViews: **${track.views}**\n`
+        `[${track.title}](${track.url})\nDuration: ${track.duration}\n`
       )
       .setThumbnail(track.thumbnail);
 

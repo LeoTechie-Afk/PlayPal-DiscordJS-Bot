@@ -20,6 +20,6 @@
     "node-fetch": "^2.6.9",
     "nodemon": "^2.0.22",
     "play-dl": "^1.9.6",
-    "ytdl-core": "^4.10.0"
+    "ytdl-core": "^4.9.1"
   }
 }

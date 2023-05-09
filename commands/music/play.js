@@ -2,52 +2,22 @@ const {
   SlashCommandBuilder,
   ChatInputCommandInteraction,
 } = require("discord.js");
-const { QueryType } = require("discord-player");
+const { QueryType, useMasterPlayer } = require("discord-player");
+const ytdl = require("ytdl-core");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("play")
-    .setDescription(
-      "Plays a song using an url from either Soundcloud, Spotify or Youtube."
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("spotify")
-        .setDescription("Plays a song from spotify")
-        .addStringOption((option) =>
-          option
-            .setName("url")
-            .setDescription("The url of the song you want to play.")
-            .setRequired(true)
+    .setDescription("Plays a song from either Soundcloud, Spotify or Youtube.")
+    .addStringOption((option) =>
+      option
+        .setName("query")
+        .setDescription(
+          "The name or the link to the resource you want to play."
         )
-    )
-
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("ytb")
-        .setDescription("Plays a song from Youtube")
-        .addStringOption((option) =>
-          option
-            .setName("url")
-            .setDescription("The url of the song you want to play.")
-            .setRequired(true)
-        )
-    )
-
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("soundcloud")
-        .setDescription("Plays a song from Soundcloud")
-        .addStringOption((option) =>
-          option
-            .setName("url")
-            .setDescription("The url of the song you want to play.")
-            .setRequired(true)
-        )
+        .setRequired(true)
     ),
   /**
-   *
-   *
    * @param {ChatInputCommandInteraction} interaction
    */
   async execute(interaction) {
@@ -60,22 +30,33 @@ module.exports = {
     if (interaction.member.voice.selfDeaf)
       return interaction.reply("🎧 You need to be unmuted to play a song.");
 
-    const query = interaction.options.getString("url");
+    const query = interaction.options.getString("query");
     let queryType;
 
-    switch (interaction.options._subcommand) {
-      case "spotify":
-        if (query.includes) queryType = QueryType.SPOTIFY;
-        break;
-      case "ytb":
-        break;
-      // soundcloud
-      default:
-        break;
-    }
+    await interaction.deferReply();
+
+    if (query.includes("open.spotify.com/playlist"))
+      queryType = QueryType.SPOTIFY_PLAYLIST;
+    else if (query.includes("open.spotify.com/album"))
+      queryType = QueryType.SPOTIFY_ALBUM;
+    else if (query.includes("open.spotify.com/track"))
+      queryType = QueryType.SPOTIFY_SONG;
+    else if (
+      query.includes("list") &&
+      (query.includes("youtube.com") || query.includes("youtu.be"))
+    )
+      queryType = QueryType.YOUTUBE_PLAYLIST;
+    else if (query.includes("youtube.com") || query.includes("youtu.be"))
+      queryType = QueryType.YOUTUBE_VIDEO;
+    else if (query.includes("soundcloud.com/playlist"))
+      queryType = QueryType.SOUNDCLOUD_PLAYLIST;
+    else if (query.includes("soundcloud.com"))
+      queryType = QueryType.SOUNDCLOUD_TRACK;
+    else queryType = QueryType.YOUTUBE_SEARCH;
+
     const searchResult = await player.search(query, {
       requestedBy: interaction.user,
-      searchEngine: QueryType.YOUTUBE_SEARCH,
+      searchEngine: queryType,
     });
 
     if (!searchResult.hasTracks()) {
@@ -90,6 +71,21 @@ module.exports = {
             selfDeaf: true,
             leaveOnEnd: false,
             leaveOnEmpty: true,
+            skipOnNoStream: true,
+            onBeforeCreateStream: async (track, _source, _queue) => {
+              if (!queryType.includes("youtube")) return null;
+
+              return ytdl(
+                track.url.includes("youtube.com")
+                  ? track.url
+                  : (
+                      await Youtube.searchOne(
+                        `${track.title} by ${track.author} lyrics`
+                      )
+                    ).url,
+                { filter: "audioonly" }
+              );
+            },
           },
         });
 
