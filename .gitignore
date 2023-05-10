@@ -3,5 +3,6 @@ config.json
 sounds/*
 *.bat
 .env
+events/debugEvent.js
 # folders
 node_modules/
