@@ -33,9 +33,7 @@ module.exports = {
 
       if (deafMemberCount === memberCount) {
         if (!queue || !queue.isPlaying()) {
-          await interaction.channel.send(
-            "Leaving the channel because everyone is muted 🔇"
-          );
+          queue.metadata.channel.send("🔇 Leaving because everyone is muted.");
 
           connection.destroy();
 

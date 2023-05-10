@@ -16,8 +16,13 @@ module.exports = player.events.on("audioTracksAdd", (queue, tracks) => {
             `[Multiple tracks added to the queue](${tracks[0].playlist.url})`
           )
           .addFields([
-            { name: "Requested by", value: `<@${tracks[0].requestedBy.id}>` },
-          ]),
+            {
+              name: "Requested by",
+              value: `<@${queue.tracks[0].requestedBy.id}>`,
+              inline: true,
+            },
+          ])
+          .setTimestamp(new Date().getTime()),
       ],
     });
   } catch (error) {

@@ -22,7 +22,8 @@ module.exports = player.events.on("playerStart", (queue, track) => {
           .addFields([
             { name: "Requested by", value: `<@${track.requestedBy.id}>` },
             { name: "Duration", value: `${track.duration}` },
-          ]),
+          ])
+          .setTimestamp(new Date().getTime()),
       ],
     });
   } catch (error) {

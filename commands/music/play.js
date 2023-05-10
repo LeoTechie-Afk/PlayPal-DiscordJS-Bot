@@ -4,6 +4,7 @@ const {
 } = require("discord.js");
 const { QueryType, useMasterPlayer } = require("discord-player");
 const ytdl = require("ytdl-core");
+const Youtube = require("youtube-sr");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -67,27 +68,29 @@ module.exports = {
       try {
         await player.play(channel, searchResult, {
           nodeOptions: {
+            bufferingTimeout: 15000,
             metadata: interaction, // can be accessed with queue.metadata
             selfDeaf: true,
             leaveOnEnd: false,
             leaveOnEmpty: true,
             skipOnNoStream: true,
+            defaultFFmpegFilters: ["normalizer"],
             onBeforeCreateStream: async (track, _source, _queue) => {
-              if (!queryType.includes("youtube")) return null;
-
-              return ytdl(
-                track.url.includes("youtube.com")
-                  ? track.url
-                  : (
+              return track.url.includes("youtube.com")
+                ? ytdl(track.url, { filter: "audioonly" })
+                : ytdl(
+                    (
                       await Youtube.searchOne(
                         `${track.title} by ${track.author} lyrics`
                       )
                     ).url,
-                { filter: "audioonly" }
-              );
+                    { filter: "audioonly" }
+                  );
             },
           },
         });
+
+        console.log(player.scanDeps());
 
         await interaction.editReply(`Loading your track`);
       } catch (e) {

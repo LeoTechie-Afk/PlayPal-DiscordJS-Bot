@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { useQueue } = require("discord-player");
+const { useQueue, useMasterPlayer } = require("discord-player");
 const { EmbedBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -18,7 +18,12 @@ module.exports = {
       .setTitle("Currently playing song!")
       .setColor(0x6666ff)
       .addFields([
-        { name: "Requested by", value: `<@${interaction.user.id}>` },
+        {
+          name: "Requested by",
+          value: `<@${track.requestedBy.id}>`,
+          inline: true,
+        },
+        { name: "", value: `<t:${new Date().getTime()}:t>` },
       ]);
 
     if (!channel)
