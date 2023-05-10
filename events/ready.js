@@ -1,3 +1,4 @@
+const { useMasterPlayer } = require("discord-player");
 const { Events } = require("discord.js");
 
 module.exports = {
@@ -5,6 +6,6 @@ module.exports = {
   once: true,
   async execute(client) {
     console.log(`Ready! Logged in as ${client.user.tag}`);
-    client.user.setActivity("a movie 🎥", { type: "WATCHING" });
+    await useMasterPlayer().extractors.loadDefault();
   },
 };

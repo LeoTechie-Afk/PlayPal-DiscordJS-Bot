@@ -23,7 +23,6 @@ module.exports = {
    */
   async execute(interaction) {
     const player = useMasterPlayer(); // Get the player instance that we created earlier
-    await player.extractors.loadDefault();
     const channel = interaction.member.voice.channel;
 
     if (!channel)
@@ -68,25 +67,24 @@ module.exports = {
       try {
         await player.play(channel, searchResult, {
           nodeOptions: {
-            bufferingTimeout: 15000,
             metadata: interaction, // can be accessed with queue.metadata
             selfDeaf: true,
             leaveOnEnd: false,
             leaveOnEmpty: true,
             skipOnNoStream: true,
             defaultFFmpegFilters: ["normalizer"],
-            onBeforeCreateStream: async (track, _source, _queue) => {
-              return track.url.includes("youtube.com")
-                ? ytdl(track.url, { filter: "audioonly" })
-                : ytdl(
-                    (
-                      await Youtube.searchOne(
-                        `${track.title} by ${track.author} lyrics`
-                      )
-                    ).url,
-                    { filter: "audioonly" }
-                  );
-            },
+            // onBeforeCreateStream: async (track, _source, _queue) => {
+            //   return track.url.includes("youtube.com")
+            //     ? ytdl(track.url, { filter: "audioonly" })
+            //     : ytdl(
+            //         (
+            //           await Youtube.searchOne(
+            //             `${track.title} by ${track.author} lyrics`
+            //           )
+            //         ).url,
+            //         { filter: "audioonly" }
+            //       );
+            // },
           },
         });
 
