@@ -88,8 +88,6 @@ module.exports = {
           },
         });
 
-        console.log(player.scanDeps());
-
         await interaction.editReply(`Loading your track`);
       } catch (e) {
         // let's return error if something failed

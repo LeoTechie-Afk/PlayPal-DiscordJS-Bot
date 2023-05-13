@@ -16,7 +16,7 @@ module.exports = player.events.on("playerStart", (queue, track) => {
       embeds: [
         new EmbedBuilder()
           .setColor(0x6666ff)
-          .setThumbnail(track.raw.thumbnail.url)
+          .setThumbnail(track.thumbnail)
           .setTitle("🎶 Now playing")
           .setDescription(`[Started playing ${track.title}](${track.url})`)
           .addFields([

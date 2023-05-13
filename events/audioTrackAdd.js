@@ -10,7 +10,7 @@ module.exports = player.events.on("audioTrackAdd", (queue, track) => {
       embeds: [
         new EmbedBuilder()
           .setColor(0x6666ff)
-          .setThumbnail(track.raw.thumbnail.url)
+          .setThumbnail(track.thumbnail)
           .setTitle("✅ Added to queue")
           .setDescription(`[${track.title} added to the queue](${track.url})`)
           .addFields([

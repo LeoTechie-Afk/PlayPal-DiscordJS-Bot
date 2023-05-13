@@ -1,4 +1,4 @@
-const { useMasterPlayer, voiceUtils } = require("discord-player");
+const { useMasterPlayer, useQueue, voiceUtils } = require("discord-player");
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
@@ -8,21 +8,24 @@ module.exports = {
   async execute(interaction) {
     const player = useMasterPlayer();
     const guildId = interaction.guild.id;
-    const connection = player.nodes.get(guildId).connection;
-    // gets member id and bot's current id
-    const memberVoiceId = interaction.member.voice.channel.id;
+
+    const queue = useQueue(guildId);
+
+    if (!queue) return await interaction.reply("Bot not in a voice channel!");
+
+    // gets member id and bot's current voice id
+    console.log(queue);
+    const connection = queue.channel.id;
     console.log(connection);
-    const clientVoiceId = connection;
+    const memberVoiceId = interaction.member.voice.channel.id;
 
     // if the bot is not connected returns an error message
     if (!connection) return interaction.reply("Bot not in a voice channel! ");
-    if (clientVoiceId != memberVoiceId)
+    if (connection != memberVoiceId)
       return interaction.reply("User and bot are not in the same channel.");
 
     // Stops the queue
     player.destroy();
-    // Disconnects the bot
-    connection.destroy();
 
     const embed = new EmbedBuilder()
       .setTitle(`🎶 Leaving channel!`)
