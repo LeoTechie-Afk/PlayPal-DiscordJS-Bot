@@ -26,9 +26,13 @@ module.exports = {
     const channel = interaction.member.voice.channel;
 
     if (!channel)
-      return interaction.reply("🚫 You are not connected to a voice channel!"); // make sure we have a voice channel
+      return await interaction.reply(
+        "🚫 You are not connected to a voice channel!"
+      ); // make sure we have a voice channel
     if (interaction.member.voice.selfDeaf)
-      return interaction.reply("🎧 You need to be unmuted to play a song.");
+      return await interaction.reply(
+        "🎧 You need to be unmuted to play a song."
+      );
 
     const query = interaction.options.getString("query");
     let queryType;
@@ -73,18 +77,7 @@ module.exports = {
             leaveOnEmpty: true,
             skipOnNoStream: true,
             defaultFFmpegFilters: ["normalizer"],
-            // onBeforeCreateStream: async (track, _source, _queue) => {
-            //   return track.url.includes("youtube.com")
-            //     ? ytdl(track.url, { filter: "audioonly" })
-            //     : ytdl(
-            //         (
-            //           await Youtube.searchOne(
-            //             `${track.title} by ${track.author} lyrics`
-            //           )
-            //         ).url,
-            //         { filter: "audioonly" }
-            //       );
-            // },
+            bufferingTimeout: 0,
           },
         });
 

@@ -14,7 +14,6 @@ client.commands = new Collection();
 const player = Player.singleton(client, {
   autoRegisterExtractor: false,
   ytdlOptions: {
-    requestOptions: { headers: { cookie: youtubeCookie } },
     filter: "audioonly",
     highWaterMark: 1 << 30,
     dlChunkSize: 0,
